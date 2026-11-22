@@ -1,0 +1,179 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, NAV, POSTHOG_KEY } from '../config';
+
+interface Props { title: string; description?: string; ogImage?: string }
+const { title, description = SITE.description, ogImage = '/og.png' } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, SITE.url).href;
+const ogImageUrl = new URL(ogImage, SITE.url).href;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0A0920" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: SITE.name,
+      url: SITE.url,
+      email: SITE.email,
+      description: SITE.description,
+      areaServed: 'US',
+      address: { '@type': 'PostalAddress', addressRegion: 'TX', addressCountry: 'US' },
+      founder: { '@type': 'Person', name: 'Kyle Becker' },
+      sameAs: [SITE.linkedin],
+    })} />
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <!-- PostHog: anonymous usage counts. Named events only, no recordings, respects Do Not Track. -->
+    <script is:inline define:vars={{ POSTHOG_KEY }}>
+      !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+      posthog.init(POSTHOG_KEY, {
+        api_host: 'https://us.i.posthog.com',
+        person_profiles: 'identified_only',
+        capture_pageview: true,
+        autocapture: false,
+        disable_session_recording: true,
+        respect_dnt: true
+      });
+      posthog.register({ app: 'qualia-site' });
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href') || '';
+        if (a.dataset.product) posthog.capture('product_click', { product: a.dataset.product, page: location.pathname });
+        else if (href.indexOf('#contact') !== -1 || href === '/contact') posthog.capture('book_call_click', { page: location.pathname });
+        else if (href.indexOf('mailto:') === 0) posthog.capture('email_click', { page: location.pathname });
+      });
+    </script>
+  </head>
+  <body class="min-h-screen">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-ink">Skip to content</a>
+    <header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-colors duration-300">
+      <div class="wrap flex h-[4.5rem] items-center justify-between">
+        <a href="/" aria-label="Qualia AI Consulting, home"><Logo /></a>
+        <nav class="hidden items-center gap-9 md:flex" aria-label="Main">
+          {NAV.map((n) => (
+            <a href={n.href} aria-current={path === n.href ? 'page' : undefined}
+              class={`text-[0.95rem] font-medium transition-colors hover:text-white ${path === n.href ? 'text-white' : 'text-mist'}`}>{n.label}</a>
+          ))}
+        </nav>
+        <div class="flex items-center gap-3">
+          <span class="hidden sm:block"><a href="/#contact" class="btn btn-teal !py-3 !px-5 !text-[0.95rem]">Book a call</a></span>
+          <button id="menu-btn" type="button" class="flex h-11 w-11 items-center justify-center rounded-lg border border-white/15 text-white md:hidden" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          </button>
+        </div>
+      </div>
+      <div id="mobile-menu" class="hidden border-t border-white/10 bg-ink/95 backdrop-blur-xl md:hidden">
+        <nav class="wrap flex flex-col py-4" aria-label="Mobile">
+          {NAV.map((n) => <a href={n.href} class="border-b border-white/10 py-4 font-display text-xl font-semibold text-white">{n.label}</a>)}
+          <a href="/#contact" class="btn btn-teal mt-5">Book a call</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main"><slot /></main>
+
+    <footer class="bg-ink text-mist">
+      <div class="wrap py-16">
+        <div class="grid grid-cols-1 gap-12 md:grid-cols-[1.6fr_1fr_1fr_1.2fr]">
+          <div>
+            <Logo />
+            <p class="mt-6 max-w-sm leading-relaxed text-haze">We guide companies through AI workforce transformation: strategy, training, and the tools your teams use in their daily work.</p>
+          </div>
+          <div>
+            <h2 class="eyebrow text-white">Company</h2>
+            <ul class="mt-5 space-y-3">
+              {NAV.map((n) => <li><a class="hover:text-white" href={n.href}>{n.label}</a></li>)}
+              <li><a class="hover:text-white" href="/privacy">Privacy</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="eyebrow text-white">Built by Qualia</h2>
+            <ul class="mt-5 space-y-3">
+              <li><a class="hover:text-white" href="https://trace.engagequalia.com" target="_blank" rel="noopener">Qualia Trace</a></li>
+              <li><a class="hover:text-white" href="https://buyandbuildgame.com" target="_blank" rel="noopener">Buy and Build</a></li>
+              <li><a class="hover:text-white" href="https://departure.engagequalia.com" target="_blank" rel="noopener">Departure: Fitness Quest</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="eyebrow text-white">Contact</h2>
+            <ul class="mt-5 space-y-3">
+              <li><a class="hover:text-white" href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+              <li>{SITE.location}</li>
+              <li><a class="inline-flex items-center gap-1.5 hover:text-white" href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn <Icon name="out" class="w-4 h-4" /></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-14 flex flex-col gap-3 border-t border-white/10 pt-8 text-sm text-haze sm:flex-row sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} Qualia AI Consulting. All rights reserved.</p>
+          <p>Dallas/Fort Worth, Texas</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const header = document.getElementById('site-header');
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      const solid = ['bg-ink/85', 'backdrop-blur-xl', 'border-b', 'border-white/10'];
+      const paint = () => {
+        const open = menu && !menu.classList.contains('hidden');
+        header?.classList[window.scrollY > 16 || open ? 'add' : 'remove'](...solid);
+      };
+      paint();
+      window.addEventListener('scroll', paint, { passive: true });
+      btn?.addEventListener('click', () => {
+        const open = menu?.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', String(open));
+        paint();
+      });
+      menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        btn?.setAttribute('aria-expanded', 'false');
+        paint();
+      }));
+
+      const items = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver((entries) => {
+          for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add('in'));
+      }
+    </script>
+  </body>
+</html>

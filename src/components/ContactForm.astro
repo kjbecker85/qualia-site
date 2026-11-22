@@ -1,0 +1,82 @@
+---
+import { LEADS, SITE } from '../config';
+import Icon from './Icon.astro';
+---
+<form id="lead-form" class="glass rounded-3xl p-6 sm:p-9" novalidate
+  data-url={`${LEADS.supabaseUrl}/rest/v1/${LEADS.table}`} data-key={LEADS.supabaseAnonKey} data-email={SITE.email}>
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div class="field"><label for="lf-name">Name</label><input id="lf-name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder="Your name" /></div>
+    <div class="field"><label for="lf-email">Work email</label><input id="lf-email" name="email" type="email" autocomplete="email" required maxlength="200" placeholder="you@company.com" /></div>
+    <div class="field sm:col-span-2"><label for="lf-company">Company</label><input id="lf-company" name="company" type="text" autocomplete="organization" maxlength="160" placeholder="Company name" /></div>
+    <div class="field sm:col-span-2"><label for="lf-message">What do you want AI to do for your company?</label><textarea id="lf-message" name="message" rows="5" required maxlength="4000" placeholder="A few lines are enough."></textarea></div>
+    <!-- Left empty by people. Filled by bots. -->
+    <div class="hidden" aria-hidden="true"><label for="lf-website">Website</label><input id="lf-website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+  </div>
+  <p id="lead-error" class="hidden mt-5 rounded-xl border border-[#F8B4B4]/40 bg-[#F8B4B4]/10 px-4 py-3 text-sm text-[#FFD9D9]" role="alert">
+    The form could not send your message. <a id="lead-mailto" class="underline font-semibold text-white" href={`mailto:${SITE.email}`}>Send it by email</a> and we will get it.
+  </p>
+  <p id="lead-invalid" class="hidden mt-5 text-sm text-[#FFD9D9]" role="alert">Please add your name, a valid email and a short message.</p>
+  <div class="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <button type="submit" class="btn btn-teal">Send message <span class="arrow"><Icon name="arrow" class="w-4 h-4" /></span></button>
+    <p class="text-sm text-haze">Or write to <a class="text-white underline underline-offset-4" href={`mailto:${SITE.email}?subject=Book%20a%20call`}>{SITE.email}</a></p>
+  </div>
+</form>
+<div id="lead-done" class="hidden glass rounded-3xl p-8 sm:p-10" role="status" tabindex="-1">
+  <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-teal text-ink"><Icon name="check" class="w-6 h-6" /></span>
+  <h3 class="display-3 text-white mt-5">Thank you. Your message is in.</h3>
+  <p class="mt-3 text-mist">We will reply by email to set up a call.</p>
+</div>
+
+<script>
+  const form = document.getElementById('lead-form') as HTMLFormElement | null;
+  const done = document.getElementById('lead-done');
+  const err = document.getElementById('lead-error');
+  const invalid = document.getElementById('lead-invalid');
+  const mailto = document.getElementById('lead-mailto') as HTMLAnchorElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const val = (k: string) => String(data.get(k) || '').trim();
+    const lead = { name: val('name'), email: val('email'), company: val('company') || null, message: val('message'), source: 'website:' + location.pathname };
+    err?.classList.add('hidden');
+    invalid?.classList.add('hidden');
+
+    if (!lead.name || !lead.message || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(lead.email)) {
+      invalid?.classList.remove('hidden');
+      return;
+    }
+    const finish = () => {
+      form.classList.add('hidden');
+      done?.classList.remove('hidden');
+      done?.focus();
+    };
+    if (val('website')) return finish();
+
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const label = button.innerHTML;
+    button.disabled = true;
+    button.textContent = 'Sending';
+    try {
+      const key = form.dataset.key || '';
+      const res = await fetch(form.dataset.url || '', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: key, Authorization: 'Bearer ' + key, Prefer: 'return=minimal' },
+        body: JSON.stringify(lead),
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      (window as any).posthog?.capture('lead_submitted', { page: location.pathname });
+      finish();
+    } catch (ex) {
+      console.error('Lead form error', ex);
+      (window as any).posthog?.capture('lead_failed', { page: location.pathname });
+      if (mailto) {
+        const body = `${lead.message}\n\n${lead.name}${lead.company ? ', ' + lead.company : ''}\n${lead.email}`;
+        mailto.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Book a call')}&body=${encodeURIComponent(body)}`;
+      }
+      err?.classList.remove('hidden');
+      button.disabled = false;
+      button.innerHTML = label;
+    }
+  });
+</script>

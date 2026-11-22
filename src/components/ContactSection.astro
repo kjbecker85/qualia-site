@@ -1,0 +1,26 @@
+---
+import ContactForm from './ContactForm.astro';
+import Circuit from './Circuit.astro';
+import Icon from './Icon.astro';
+import { SITE } from '../config';
+interface Props { heading?: string }
+const { heading = 'Book a call' } = Astro.props;
+---
+<section id="contact" class="dark-surface grid-lines">
+  <Circuit top={false} />
+  <div class="wrap py-24 sm:py-32">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+      <div class="reveal">
+        <p class="eyebrow text-teal">Contact</p>
+        <h2 class="display-2 text-white mt-5">{heading}</h2>
+        <p class="lead mt-6 text-mist">Tell us about your company and what you want AI to do for it. We will reply by email to set up a call.</p>
+        <ul class="mt-10 space-y-5 text-mist">
+          <li class="flex items-center gap-4"><span class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-teal"><Icon name="mail" class="w-5 h-5" /></span><a class="text-white hover:underline underline-offset-4" href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          <li class="flex items-center gap-4"><span class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-teal"><Icon name="pin" class="w-5 h-5" /></span><span>{SITE.location}</span></li>
+          <li class="flex items-center gap-4"><span class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-teal"><Icon name="link" class="w-5 h-5" /></span><a class="text-white hover:underline underline-offset-4" href={SITE.linkedin} target="_blank" rel="noopener">Qualia AI Consulting on LinkedIn</a></li>
+        </ul>
+      </div>
+      <div class="reveal" style="--d:120ms"><ContactForm /></div>
+    </div>
+  </div>
+</section>

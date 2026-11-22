@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+interface Props { product: { name: string; kind: string; url: string; host: string; image: string; short: string; linkLabel: string }; delay?: number }
+const { product: p, delay = 0 } = Astro.props;
+---
+<a href={p.url} target="_blank" rel="noopener" class="group block reveal" style={`--d:${delay}ms`} data-product={p.name}>
+  <div class="frame">
+    <div class="frame-bar"><i></i><i></i><i></i><span class="frame-url">{p.host}</span></div>
+    <img src={p.image} alt={`Screen of ${p.name}`} width="1280" height="800" loading="lazy" decoding="async" />
+  </div>
+  <p class="eyebrow text-teal-deep mt-6">{p.kind}</p>
+  <h3 class="display-3 text-ink mt-2">{p.name}</h3>
+  <p class="mt-2 text-body leading-relaxed">{p.short}</p>
+  <span class="link-arrow mt-4">{p.linkLabel} <Icon name="out" class="w-4 h-4" /></span>
+</a>

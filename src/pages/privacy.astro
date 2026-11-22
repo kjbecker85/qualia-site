@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { SITE } from '../config';
+---
+<Layout title="Privacy | Qualia AI Consulting" description="What the Qualia AI Consulting website collects and how it is used.">
+  <PageHero eyebrow="Privacy" title="Privacy" lead="What this website collects, and what we do with it. Last updated November 22, 2026." />
+  <section class="bg-white">
+    <div class="wrap py-16 sm:py-24">
+      <div class="prose-page max-w-3xl text-body">
+        <h2 style="margin-top:0">Who we are</h2>
+        <p>This website is run by Qualia AI Consulting, based in the Dallas/Fort Worth area of Texas. You can reach us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+        <h2>What you send us</h2>
+        <p>When you send the contact form, we store what you type: your name, your email, your company and your message. We also store the page the form was sent from and the time.</p>
+        <p>We use this to answer you and to talk with you about our services. We do not sell it and we do not share it with advertisers.</p>
+        <p>The form data is stored with Supabase, a database service we use.</p>
+
+        <h2>Usage counts</h2>
+        <p>We use PostHog to count visits and a few named actions, such as a click on a button. This tells us which pages are useful.</p>
+        <ul>
+          <li>We do not record your screen or your typing.</li>
+          <li>We do not build a profile of you as a visitor.</li>
+          <li>If your browser sends a Do Not Track signal, nothing is counted.</li>
+        </ul>
+
+        <h2>Fonts and hosting</h2>
+        <p>The site is hosted on GitHub Pages and loads its fonts from Google Fonts. Like any web host, these services receive your internet address when your browser asks for a file.</p>
+
+        <h2>Links to our products</h2>
+        <p>This site links to Qualia Trace, Buy and Build, and Departure: Fitness Quest. Each product has its own site and its own privacy page.</p>
+
+        <h2>Your choices</h2>
+        <p>Write to <a href={`mailto:${SITE.email}`}>{SITE.email}</a> to see, correct or delete what you sent us. We will do it and confirm by email.</p>
+
+        <h2>Changes</h2>
+        <p>If this page changes, the date at the top changes with it.</p>
+      </div>
+    </div>
+  </section>
+</Layout>

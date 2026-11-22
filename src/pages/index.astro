@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Circuit from '../components/Circuit.astro';
+import Icon from '../components/Icon.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Steps from '../components/Steps.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { SERVICES, PRODUCTS } from '../config';
+
+const problems = [
+  { n: '01', title: 'No plan for the work', text: 'Tools get bought before anyone decides which work they should change. People try them once and go back to the old way.' },
+  { n: '02', title: 'Training that does not stick', text: 'One workshop does not build a habit. People need practice on their own tasks, with help close by.' },
+  { n: '03', title: 'Pilots with no owner', text: 'A demo impresses the room. Then nobody is in charge of making it part of the job, and it fades.' },
+];
+const entry = SERVICES[0];
+const rest = SERVICES.slice(1);
+---
+<Layout title="Qualia AI Consulting | Get your people working with AI">
+  <!-- Hero -->
+  <section class="dark-surface grid-lines">
+    <Circuit />
+    <div class="wrap pt-36 pb-20 sm:pt-44 lg:pt-52 lg:pb-28">
+      <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
+        <div>
+          <p class="eyebrow text-teal reveal">AI workforce transformation</p>
+          <h1 class="display-1 text-white mt-6 reveal" style="--d:80ms">Get your people <span class="grad-text">working with AI.</span></h1>
+          <p class="lead mt-8 max-w-xl text-mist reveal" style="--d:160ms">Qualia AI Consulting guides companies through AI workforce transformation. We set the strategy, train your teams, and build the AI tools and agents they use in their daily work.</p>
+          <div class="mt-10 flex flex-col gap-4 sm:flex-row reveal" style="--d:240ms">
+            <a href="#contact" class="btn btn-teal">Book a call <span class="arrow"><Icon name="arrow" class="w-4 h-4" /></span></a>
+            <a href="#work" class="btn btn-ghost">See what we build</a>
+          </div>
+        </div>
+
+        <div class="relative mx-auto w-full max-w-md lg:max-w-none reveal" style="--d:300ms">
+          <div class="absolute -inset-10 -z-10 rounded-full bg-violet/30 blur-3xl" aria-hidden="true"></div>
+          <div class="glass rounded-3xl p-6 sm:p-7 float">
+            <div class="flex items-center justify-between">
+              <p class="eyebrow text-haze">Built by Qualia</p>
+              <p class="flex items-center gap-2 font-mono text-xs text-teal"><span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-teal opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-teal"></span></span>3 live</p>
+            </div>
+            <ul class="mt-5 space-y-3">
+              {PRODUCTS.map((p) => (
+                <li>
+                  <a href={p.url} target="_blank" rel="noopener" data-product={p.name} class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-3 transition-colors hover:border-teal/50 hover:bg-white/[0.08]">
+                    <img src={p.image} alt="" width="1280" height="800" class="h-14 w-[5.5rem] flex-none rounded-lg object-cover object-top ring-1 ring-white/15" />
+                    <span class="min-w-0 flex-1">
+                      <span class="block font-display text-lg font-semibold leading-tight text-white">{p.name}</span>
+                      <span class="mt-1 block truncate font-mono text-xs text-haze">{p.host}</span>
+                    </span>
+                    <Icon name="out" class="w-5 h-5 flex-none text-haze transition-colors group-hover:text-teal" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-5 border-t border-white/10 pt-5 text-sm leading-relaxed text-mist">We build our own products with the same AI methods we bring to clients.</p>
+          </div>
+        </div>
+      </div>
+
+      <dl class="mt-20 grid grid-cols-1 gap-6 border-t border-white/10 pt-8 sm:grid-cols-3 lg:mt-28 reveal" style="--d:360ms">
+        <div><dt class="eyebrow text-haze">Based in</dt><dd class="mt-2 font-display text-xl font-semibold text-white">Dallas/Fort Worth, Texas</dd></div>
+        <div><dt class="eyebrow text-haze">Founded by</dt><dd class="mt-2 font-display text-xl font-semibold text-white">A former US Marine</dd></div>
+        <div><dt class="eyebrow text-haze">We do</dt><dd class="mt-2 font-display text-xl font-semibold text-white">Strategy, training and tools</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="bg-paper dot-grid">
+    <div class="wrap py-24 sm:py-32">
+      <div class="max-w-3xl reveal">
+        <p class="eyebrow text-teal-deep">The problem</p>
+        <h2 class="display-2 text-ink mt-5">Why AI efforts stall</h2>
+        <p class="lead mt-6 text-body">Many companies already pay for AI tools while the daily work stays the same. Three causes come up again and again.</p>
+      </div>
+      <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {problems.map((p, i) => (
+          <div class="card p-8 reveal" style={`--d:${i * 90}ms`}>
+            <p class="font-mono text-sm text-violet">{p.n}</p>
+            <h3 class="display-3 text-ink mt-8">{p.title}</h3>
+            <p class="mt-3 leading-relaxed text-body">{p.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="bg-white">
+    <div class="wrap py-24 sm:py-32">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between reveal">
+        <div class="max-w-2xl">
+          <p class="eyebrow text-teal-deep">Services</p>
+          <h2 class="display-2 text-ink mt-5">A plan, trained people, and tools that fit</h2>
+        </div>
+        <a href="/services" class="link-arrow">All services <Icon name="arrow" class="w-4 h-4" /></a>
+      </div>
+
+      <a href="/services#assessment" class="group relative mt-14 block overflow-hidden rounded-[1.75rem] bg-night p-8 text-mist sm:p-12 reveal">
+        <div class="absolute inset-0 bg-[radial-gradient(40rem_22rem_at_100%_0%,rgba(106,72,242,0.5),transparent_65%)]" aria-hidden="true"></div>
+        <div class="relative grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <p class="inline-flex items-center gap-2 rounded-full border border-teal/40 bg-teal/10 px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-teal">{entry.tag}</p>
+            <h3 class="display-2 text-white mt-6" style="font-size:clamp(1.8rem,3.4vw,2.6rem)">{entry.name}</h3>
+            <p class="lead mt-5 max-w-xl">{entry.short}</p>
+            <span class="mt-8 inline-flex items-center gap-2 font-semibold text-teal">What the assessment covers <Icon name="arrow" class="w-4 h-4 transition-transform group-hover:translate-x-1" /></span>
+          </div>
+          <ul class="space-y-3">
+            {entry.gets.map((g) => (
+              <li class="flex gap-3 rounded-xl border border-white/10 bg-white/[0.05] px-4 py-3.5 text-[0.98rem] text-white"><Icon name="check" class="w-5 h-5 flex-none text-teal mt-0.5" />{g}</li>
+            ))}
+          </ul>
+        </div>
+      </a>
+
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {rest.map((s, i) => (
+          <a href={`/services#${s.id}`} class="card flex flex-col p-8 reveal" style={`--d:${i * 90}ms`}>
+            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#EFEBFF] text-violet"><Icon name={s.icon} /></span>
+            <h3 class="display-3 text-ink mt-7">{s.name}</h3>
+            <p class="mt-3 flex-1 leading-relaxed text-body">{s.short}</p>
+            <span class="link-arrow mt-6">Learn more <Icon name="arrow" class="w-4 h-4" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="dark-surface">
+    <div class="wrap py-24 sm:py-32">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow text-teal">How an engagement works</p>
+        <h2 class="display-2 text-white mt-5">Four steps, in plain view</h2>
+        <p class="lead mt-6 text-mist">You know what happens next at every point, and who owns it.</p>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work" class="bg-paper">
+    <div class="wrap py-24 sm:py-32">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between reveal">
+        <div class="max-w-2xl">
+          <p class="eyebrow text-teal-deep">What we have built</p>
+          <h2 class="display-2 text-ink mt-5">We ship software, and it is live</h2>
+          <p class="lead mt-6 text-body">Qualia builds its own products with AI doing much of the work. Each one is in use today, and you can open it now.</p>
+        </div>
+        <a href="/work" class="link-arrow">More on each product <Icon name="arrow" class="w-4 h-4" /></a>
+      </div>
+      <div class="mt-14 grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-3">
+        {PRODUCTS.map((p, i) => <ProductCard product={p} delay={i * 90} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="bg-white">
+    <div class="wrap py-24 sm:py-32">
+      <div class="grid grid-cols-1 gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-20">
+        <div class="reveal">
+          <p class="eyebrow text-teal-deep">About</p>
+          <h2 class="display-2 text-ink mt-5">Led by Kyle Becker</h2>
+          <p class="lead mt-6 text-body">Qualia AI Consulting is led by Kyle Becker, a former US Marine based in the Dallas/Fort Worth area.</p>
+          <p class="mt-5 text-lg leading-relaxed text-body">Kyle works with clients directly and builds software himself. The three products on this site came out of that work. We teach client teams the same way of working.</p>
+          <a href="/about" class="link-arrow mt-8">About Qualia <Icon name="arrow" class="w-4 h-4" /></a>
+        </div>
+        <dl class="card divide-y divide-line reveal" style="--d:120ms">
+          {[
+            ['Founder', 'Kyle Becker'],
+            ['Service', 'Former US Marine'],
+            ['Home base', 'Dallas/Fort Worth, Texas'],
+            ['Products live', 'Qualia Trace, Buy and Build, Departure'],
+          ].map(([k, v]) => (
+            <div class="flex flex-col gap-1 px-7 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
+              <dt class="eyebrow text-muted">{k}</dt>
+              <dd class="font-display text-lg font-semibold text-ink sm:text-right">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</Layout>

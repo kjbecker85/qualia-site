@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+<Layout title="Page not found | Qualia AI Consulting">
+  <PageHero eyebrow="Error 404" title="This page does not exist." lead="The address may be old. The old site has been replaced.">
+    <div class="mt-10 flex flex-col gap-4 sm:flex-row">
+      <a href="/" class="btn btn-teal">Go to the home page</a>
+      <a href="/contact" class="btn btn-ghost">Contact us</a>
+    </div>
+  </PageHero>
+</Layout>

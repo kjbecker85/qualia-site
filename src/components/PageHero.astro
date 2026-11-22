@@ -1,0 +1,14 @@
+---
+import Circuit from './Circuit.astro';
+interface Props { eyebrow: string; title: string; lead?: string }
+const { eyebrow, title, lead } = Astro.props;
+---
+<section class="dark-surface grid-lines">
+  <Circuit />
+  <div class="wrap pt-36 pb-20 sm:pt-44 sm:pb-28">
+    <p class="eyebrow text-teal">{eyebrow}</p>
+    <h1 class="display-2 text-white mt-5 max-w-4xl" style="font-size:clamp(2.4rem,5.6vw,4.4rem)">{title}</h1>
+    {lead && <p class="lead mt-6 max-w-2xl text-mist">{lead}</p>}
+    <slot />
+  </div>
+</section>

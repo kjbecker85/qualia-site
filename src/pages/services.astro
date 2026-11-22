@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Steps from '../components/Steps.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { SERVICES } from '../config';
+---
+<Layout title="Services | Qualia AI Consulting" description="AI readiness assessment, AI strategy and roadmap, workforce adoption and training, and custom AI tools and agents from Qualia AI Consulting.">
+  <PageHero eyebrow="Services" title="Four services. One goal: your people working with AI." lead="Most clients start with the assessment. After that, take the services you need, in the order that fits your company.">
+    <nav class="mt-10 flex flex-wrap gap-3" aria-label="Services">
+      {SERVICES.map((s) => <a href={`#${s.id}`} class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:border-teal/60">{s.name}</a>)}
+    </nav>
+  </PageHero>
+
+  <section class="bg-paper dot-grid">
+    <div class="wrap space-y-8 py-20 sm:py-28">
+      {SERVICES.map((s, i) => (
+        <article id={s.id} class="card scroll-mt-28 overflow-hidden reveal">
+          <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
+            <div class="p-8 sm:p-12">
+              <div class="flex items-center gap-4">
+                <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#EFEBFF] text-violet"><Icon name={s.icon} /></span>
+                <p class="eyebrow text-teal-deep">{String(i + 1).padStart(2, '0')} / {s.tag}</p>
+              </div>
+              <h2 class="display-2 text-ink mt-7" style="font-size:clamp(1.8rem,3.2vw,2.5rem)">{s.name}</h2>
+              <p class="lead mt-5 text-body">{s.short}</p>
+              <p class="mt-4 leading-relaxed text-body">{s.long}</p>
+              <p class="mt-8 rounded-xl bg-paper px-5 py-4 text-[0.98rem] text-body"><span class="font-semibold text-ink">A good fit when: </span>{s.fit}</p>
+            </div>
+            <div class="border-t border-line bg-[#FBFAFE] p-8 sm:p-12 lg:border-l lg:border-t-0">
+              <h3 class="eyebrow text-muted">What you get</h3>
+              <ul class="mt-6 space-y-4">
+                {s.gets.map((g) => <li class="flex gap-3 text-ink"><span class="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-teal/20 text-teal-deep"><Icon name="check" class="w-4 h-4" /></span>{g}</li>)}
+              </ul>
+              <a href="/#contact" class="btn btn-violet mt-10">Book a call <span class="arrow"><Icon name="arrow" class="w-4 h-4" /></span></a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="dark-surface">
+    <div class="wrap py-24 sm:py-28">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow text-teal">How an engagement works</p>
+        <h2 class="display-2 text-white mt-5">Four steps, in plain view</h2>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <div class="border-t border-white/10"><ContactSection heading="Talk through what you need" /></div>
+</Layout>
