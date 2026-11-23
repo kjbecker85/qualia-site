@@ -36,7 +36,7 @@ const rest = SERVICES.slice(1);
           <div class="glass rounded-3xl p-6 sm:p-7 float">
             <div class="flex items-center justify-between">
               <p class="eyebrow text-haze">Built by Qualia</p>
-              <p class="flex items-center gap-2 font-mono text-xs text-teal"><span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-teal opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-teal"></span></span>3 live</p>
+              <p class="flex items-center gap-2 font-mono text-xs text-teal"><span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-teal opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-teal"></span></span>{PRODUCTS.length} live</p>
             </div>
             <ul class="mt-5 space-y-3">
               {PRODUCTS.map((p) => (
@@ -145,11 +145,11 @@ const rest = SERVICES.slice(1);
         <div class="max-w-2xl">
           <p class="eyebrow text-teal-deep">What we have built</p>
           <h2 class="display-2 text-ink mt-5">We ship software, and it is live</h2>
-          <p class="lead mt-6 text-body">Qualia builds its own products with AI doing much of the work. Each one is in use today, and you can open it now.</p>
+          <p class="lead mt-6 text-body">Qualia builds its own products with AI doing much of the work. Each one is live, and you can open it now.</p>
         </div>
         <a href="/work" class="link-arrow">More on each product <Icon name="arrow" class="w-4 h-4" /></a>
       </div>
-      <div class="mt-14 grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-3">
+      <div class="mt-14 grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2">
         {PRODUCTS.map((p, i) => <ProductCard product={p} delay={i * 90} />)}
       </div>
     </div>
@@ -163,7 +163,7 @@ const rest = SERVICES.slice(1);
           <p class="eyebrow text-teal-deep">About</p>
           <h2 class="display-2 text-ink mt-5">Led by Kyle Becker</h2>
           <p class="lead mt-6 text-body">Qualia AI Consulting is led by Kyle Becker, a former US Marine based in the Dallas/Fort Worth area.</p>
-          <p class="mt-5 text-lg leading-relaxed text-body">Kyle works with clients directly and builds software himself. The three products on this site came out of that work. We teach client teams the same way of working.</p>
+          <p class="mt-5 text-lg leading-relaxed text-body">Kyle works with clients directly and builds software himself. The four products on this site came out of that work. We teach client teams the same way of working.</p>
           <a href="/about" class="link-arrow mt-8">About Qualia <Icon name="arrow" class="w-4 h-4" /></a>
         </div>
         <dl class="card divide-y divide-line reveal" style="--d:120ms">
@@ -171,7 +171,7 @@ const rest = SERVICES.slice(1);
             ['Founder', 'Kyle Becker'],
             ['Service', 'Former US Marine'],
             ['Home base', 'Dallas/Fort Worth, Texas'],
-            ['Products live', 'Qualia Trace, Buy and Build, Departure'],
+            ['Products live', 'Qualia Trace, Buy and Build, Departure, Keyturn'],
           ].map(([k, v]) => (
             <div class="flex flex-col gap-1 px-7 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
               <dt class="eyebrow text-muted">{k}</dt>

@@ -163,4 +163,22 @@ export const PRODUCTS = [
       'An AI image of the future self a player is training toward',
     ],
   },
+  {
+    id: 'keyturn',
+    name: 'Keyturn',
+    kind: 'Operations web app',
+    url: 'https://keyturn.dev',
+    host: 'keyturn.dev',
+    image: '/work/keyturn.jpg',
+    linkLabel: 'Open Keyturn',
+    short:
+      'A command center for taking over apartment properties from a prior manager.',
+    long:
+      "When a property changes managers, the task checklist, the vendor contracts and the prior manager's rent rolls arrive as separate spreadsheets that disagree with each other. Keyturn reads all three, finds the problems, and gives each one an owner and a due date until the data is clean enough to load into the new manager's property management system. The demo runs on synthetic data for nine properties.",
+    points: [
+      '27 written rules check the three sheets against each other, and every finding links to its source row',
+      'A readiness score for each property, a timeline of every deadline, and a business case with three scenarios',
+      'An AI assistant that answers questions about the data and cites the record behind every claim',
+    ],
+  },
 ];
