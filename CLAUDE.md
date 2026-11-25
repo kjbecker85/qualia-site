@@ -37,6 +37,7 @@ Run `npm run check:text` and `npm run build` before every commit. After a change
 
 ## Writing rules
 
+- Clarity comes before brevity (Kyle, 2026-11-25). Everything a user, player or visitor reads is written in complete sentences that say what happens, why, and what it means for them. No fragments, and no labels standing in for an explanation. Define a term where the reader first meets it, for a smart reader who is new to the subject. Do not pad. Buttons, tabs and headings stay short.
 - Plain words, short sentences, serious tone.
 - One idea per sentence. Cut what does not help the reader decide.
 - No em dashes or en dashes. No hyphens used to separate ideas. Use commas, colons or a new sentence.
